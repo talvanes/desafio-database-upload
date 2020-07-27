@@ -1,13 +1,9 @@
 import csvParse from 'csv-parse';
 import fs from 'fs';
 import path from 'path';
-// import { getCustomRepository, getRepository } from 'typeorm';
 
 import uploadConfig from '../config/upload';
 import Transaction from '../models/Transaction';
-// import Category from '../models/Category';
-// import TransactionsRepository from '../repositories/TransactionsRepository';
-// import transactionsRouter from '../routes/transactions.routes';
 import CreateTransactionService from './CreateTransactionService';
 
 interface ServiceRequest {
@@ -44,8 +40,7 @@ class ImportTransactionsService {
 
     await new Promise(resolve => {
       parseCsv.on('end', () => {
-        fs.unlinkSync(csvFile);
-        resolve();
+        fs.promises.unlink(csvFile).then(() => resolve);
       });
     });
 
